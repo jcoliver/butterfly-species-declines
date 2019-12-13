@@ -3,21 +3,28 @@
 #keatonwilson@me.com
 #2019-08-06
 
-#packages
-library(tidyverse)
-library(spocc)
+require(tidyverse)
+require(spocc)
 
-#loading in data
-declines = read_csv("./data/declines_tax_probs.csv")
+#' Identify candidate species for each quartile of decline data
+#' 
+#' @param infile   character path to input CSV file
+#' @param outfile  character path to write output CSV of candidate species
+#' @param top_num  integer indicating how many species to draw from each 
+#' quartile
+#' 
+#' @return CSV of candidate species
+candidate_species <- function(infile = "./data/declines_tax_probs.csv", 
+                              outfile = "./data/candidate_species.csv",
+                              top_num = 5) {
+  declines = read_csv(file = infile)
 
-glimpse(declines)
-
-#Splitting species into decline quartiles and then taking the top 5 species 
-# by occurences from each quartile
-candidate_species = declines %>%
-  mutate(quartile = ntile(mean, 4)) %>%
-  group_by(quartile) %>%
-  top_n(n = 5, wt = gbif_occs)
-         
-#Writing to csv
-write_csv(candidate_species, "./data/candidate_species.csv")
+  # Split species into decline quartiles and then taking the top n species 
+  # by occurences from each quartile
+  candidate_species = declines %>%
+    mutate(quartile = ntile(mean, 4)) %>%
+    group_by(quartile) %>%
+    top_n(n = top_num, wt = gbif_occs)
+  
+  write_csv(x = candidate_species, path = outfile)
+}
