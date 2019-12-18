@@ -14,6 +14,11 @@ require(spocc)
 #' quartile
 #' 
 #' @return CSV of candidate species
+#' 
+#' @examples 
+#' \dontrun{
+#' candidate_species()
+#' }
 candidate_species <- function(infile = "./data/declines_tax_probs.csv", 
                               outfile = "./data/candidate_species.csv",
                               top_num = 5) {
