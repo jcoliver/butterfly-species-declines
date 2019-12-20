@@ -18,7 +18,7 @@ library(stringr)
 #' @param top_num  integer indicating how many species to draw from each 
 #' quartile
 #' 
-#' @return CSV of candidate species
+#' @return data frame of candidate species; also writes to CSV file
 #' @example 
 #' \dontrun{
 #' candidate_obs()
@@ -54,6 +54,7 @@ candidate_obs = function(infile = "./data/candidate_species.csv",
   
   # Write results to output file
   write_csv(x = butterfly_data_clean, path = outfile)
+  return(butterfly_data_clean)
 }
 
 ################################################################################

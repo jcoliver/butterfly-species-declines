@@ -13,7 +13,7 @@ require(spocc)
 #' @param top_num  integer indicating how many species to draw from each 
 #' quartile
 #' 
-#' @return CSV of candidate species
+#' @return data frame of candidate species, also writes to CSV file
 #' 
 #' @examples 
 #' \dontrun{
@@ -32,4 +32,5 @@ candidate_species <- function(infile = "./data/declines_tax_probs.csv",
     top_n(n = top_num, wt = gbif_occs)
   
   write_csv(x = candidate_species, path = outfile)
+  return(candidate_species)
 }
